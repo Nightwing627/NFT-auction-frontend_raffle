@@ -1,0 +1,294 @@
+{
+  "version": "0.1.0",
+  "name": "raffle",
+  "instructions": [
+    {
+      "name": "upload",
+      "accounts": [
+        {
+          "name": "lottery",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "user",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "userNftAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "nftMint",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "escrow",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "vault",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "rentSysvar",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "clockSysvar",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "tokenProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "startDate",
+          "type": {
+            "option": "i64"
+          }
+        },
+        {
+          "name": "endDate",
+          "type": "i64"
+        },
+        {
+          "name": "ticketNumbers",
+          "type": "u64"
+        },
+        {
+          "name": "limitTickets",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "closeLottery",
+      "accounts": [
+        {
+          "name": "lottery",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "clockSysvar",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "tickets",
+          "type": {
+            "vec": "publicKey"
+          }
+        }
+      ]
+    },
+    {
+      "name": "claim",
+      "accounts": [
+        {
+          "name": "lottery",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "user",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "owner",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "nftMint",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "winnerTicket",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "ticketTokenAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "receiveTokenAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "escrow",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "vault",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "clockSysvar",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "tokenProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": []
+    }
+  ],
+  "accounts": [
+    {
+      "name": "Lottery",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "status",
+            "type": {
+              "defined": "LotteryStatus"
+            }
+          },
+          {
+            "name": "nftMint",
+            "type": "publicKey"
+          },
+          {
+            "name": "winnerTicket",
+            "type": "publicKey"
+          },
+          {
+            "name": "owner",
+            "type": "publicKey"
+          },
+          {
+            "name": "escrow",
+            "type": "publicKey"
+          },
+          {
+            "name": "vault",
+            "type": "publicKey"
+          },
+          {
+            "name": "startDate",
+            "type": {
+              "option": "i64"
+            }
+          },
+          {
+            "name": "endDate",
+            "type": "i64"
+          },
+          {
+            "name": "ticketNumbers",
+            "type": "u64"
+          },
+          {
+            "name": "remainTickets",
+            "type": "u64"
+          },
+          {
+            "name": "limitTickets",
+            "type": "u64"
+          }
+        ]
+      }
+    }
+  ],
+  "types": [
+    {
+      "name": "LotteryStatus",
+      "type": {
+        "kind": "enum",
+        "variants": [
+          {
+            "name": "Opened"
+          },
+          {
+            "name": "Closed"
+          },
+          {
+            "name": "Completed"
+          }
+        ]
+      }
+    }
+  ],
+  "errors": [
+    {
+      "code": 6000,
+      "name": "ExpireDateInThePast",
+      "msg": "The end date is in the past."
+    },
+    {
+      "code": 6001,
+      "name": "StartDateInThePast",
+      "msg": "The start date is in the past."
+    },
+    {
+      "code": 6002,
+      "name": "InvalidLotteryStatus",
+      "msg": "The Lottery is now closed."
+    },
+    {
+      "code": 6003,
+      "name": "LotteryIsClosed",
+      "msg": "Lottery is closed."
+    },
+    {
+      "code": 6004,
+      "name": "LotteryIsNotStarted",
+      "msg": "The Lottery is not started."
+    },
+    {
+      "code": 6005,
+      "name": "LotteryNotOpen",
+      "msg": "The Lottery is not opened."
+    },
+    {
+      "code": 6006,
+      "name": "InvalidTicket",
+      "msg": "The ticket is not valid."
+    },
+    {
+      "code": 6007,
+      "name": "NoTicket",
+      "msg": "There is no ticket in the account."
+    },
+    {
+      "code": 6008,
+      "name": "NotOwner",
+      "msg": "You are not the owner of the ticket."
+    }
+  ]
+}

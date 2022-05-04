@@ -1,0 +1,228 @@
+{
+  "version": "0.1.0",
+  "name": "anchor_nft_auction",
+  "instructions": [
+    {
+      "name": "createAuction",
+      "accounts": [
+        {
+          "name": "auction",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "seller",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "itemHolder",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "sellerItem",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "currencyHolder",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "auctionSinger",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "rent",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "tokenProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "startPrice",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "createBid",
+      "accounts": [
+        {
+          "name": "auction",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "bid",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "bidder",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "from",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "currencyHolder",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "auctionSinger",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "oriRefundReceiver",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "tokenProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "price",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "closeAuction",
+      "accounts": [
+        {
+          "name": "auction",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "seller",
+          "isMut": false,
+          "isSigner": true
+        },
+        {
+          "name": "itemHolder",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "auctionSinger",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "itemReceiver",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "currencyHolder",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "currencyReceiver",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "tokenProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": []
+    }
+  ],
+  "accounts": [
+    {
+      "name": "Auction",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "ongoing",
+            "type": "bool"
+          },
+          {
+            "name": "seller",
+            "type": "publicKey"
+          },
+          {
+            "name": "itemHolder",
+            "type": "publicKey"
+          },
+          {
+            "name": "currencyHolder",
+            "type": "publicKey"
+          },
+          {
+            "name": "bidder",
+            "type": "publicKey"
+          },
+          {
+            "name": "refundReceiver",
+            "type": "publicKey"
+          },
+          {
+            "name": "price",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Bid",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "bidder",
+            "type": "publicKey"
+          },
+          {
+            "name": "price",
+            "type": "u64"
+          }
+        ]
+      }
+    }
+  ],
+  "errors": [
+    {
+      "code": 6000,
+      "name": "BidPirceTooLow",
+      "msg": "your bid price is too low"
+    }
+  ],
+  "metadata": {
+    "address": "6QvLg8JALiXWt1Q5oMRkaEUaPzPgX6JEq5bbS7FHu8YV"
+  }
+}
